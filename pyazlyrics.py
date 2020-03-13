@@ -1,6 +1,17 @@
 import requests
-import parsel
 from parsel import Selector
+import enlighten
+import json
+import os
+import logging
+import time
+
+
+logging.basicConfig(level=logging.DEBUG)
+
+FOLDER = 'songs'
+
+os.makedirs(FOLDER,exist_ok=True)
 
 BASE_URL = 'https://www.azlyrics.com/'
 
@@ -30,6 +41,41 @@ def get_artists(html: Selector):
     artists = [BASE_URL + link for link in html.css('body > div.container.main-page > div a ::attr(href)').getall()]
 
     return artists
+
+
+manager = enlighten.get_manager()
+
+
+# letter_pages = ['https://www.azlyrics.com/a.html', 'https://www.azlyrics.com/b.html']
+# pbar = manager.counter(total=len(letter_pages), desc='pages', unit='pages')
+
+# for page in letter_pages:
+#     pbar.update()
+#     response = requests.get(page)
+#     s_page = Selector(response.text)
+#     artists = get_artists(s_page)
+#     abar = manager.counter(total=len(artists), desc=f'Page({page})', unit='artists')
+
+#     print(response.text)
+
+#     for artist in artists:
+#         abar.update()
+#         response = requests.get(artist)
+#         s_artist = Selector(response.text)
+#         songs = get_songs(s_artist)
+#         sbar = manager.counter(total=len(songs), desc=f'Songs of ({artist})', unit='songs')
+
+#         for song in songs:
+#             sbar.update()
+#             response = requests.get(song)
+#             time.sleep(3)
+#             s_song = Selector(response.text)
+#             song = get_song(s_song)
+#             json.dump(song, open(os.path.join(FOLDER, f"({song['title']})-({song['band']}).json", 'w')), indent=2)
+#             print(f"({song['title']})-({song['band']})")
+
+#         sbar.close()
+#     abar.close()
 
 
 response = requests.get('https://www.azlyrics.com/a.html')
