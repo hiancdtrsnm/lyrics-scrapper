@@ -72,7 +72,7 @@ def _get_artist(url: str):
         print(song)
         yield get_song(song)
         sbar.update()
-        time.sleep(3)
+        time.sleep(3) # este parche es para engañar al sitio
 
     sbar.close()
 
@@ -121,20 +121,3 @@ def get_page(url:str):
 if __name__ == "__main__":
     app()
 
-# response = requests.get('https://www.azlyrics.com/a.html')
-# s = Selector(response.text)
-# data = parse_artists(s)
-
-# print(data)
-
-# response = requests.get('https://www.azlyrics.com/a/amywinehouse.html')
-# s = Selector(response.text)
-# data = parse_songs(s)
-
-# print(data)
-
-# response = requests.get('https://www.azlyrics.com/lyrics/sexpistols/godsavethequeen.html')
-# s = Selector(response.text)
-# data = parse_song(s)
-
-# print(data)
