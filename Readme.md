@@ -3,6 +3,26 @@
 * Capturar a que album pertece si es posible
 
 
+# Usage
+
+Para ver la ayuda solo ejecute:
+
+```bash
+$python pyazlyrics.py --help
+
+Usage: pyazlyrics.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  get-all     Get the info of all site
+  get-artist  Get all song of an artist, link look like this: "https://www.azlyrics.com/v/viceganda.html"
+  get-page    Get all song of artists within a page, link look like this: "https://www.azlyrics.com/c.html"
+  get-song    Get a song info the link looks like this: "https://www.azlyrics.com/lyrics/viceganda/boompanes.html"
+```
+
+
 ## Limitaciones
 
 El error que nos da es porque el sitio identifica que estas haciendo muchos requests.
