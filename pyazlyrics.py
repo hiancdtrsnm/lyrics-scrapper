@@ -85,7 +85,7 @@ def _get_page(url: str):
     abar = manager.counter(total=len(artists), desc=f'Page({url})', unit='artists')
 
     for artist in artists:
-        for song in get_artist(artist):
+        for song in _get_artist(artist):
             yield song
 
         abar.update()
@@ -102,7 +102,7 @@ def get_all():
 
 
     for page in letter_pages:
-        for song in get_page(page):
+        for song in _get_page(page):
             json.dump(song, open(os.path.join(FOLDER, f"({song['title']})-({song['band']}).json"), 'w'), indent=2)
             print(f"({song['title']})-({song['band']})")
         pbar.update()
