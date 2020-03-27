@@ -9,10 +9,8 @@ import typer
 
 app = typer.Typer()
 
-
 logging.basicConfig(level=logging.DEBUG)
 manager = enlighten.get_manager()
-
 
 FOLDER = 'songs'
 
@@ -31,6 +29,7 @@ def parse_song(html: Selector):
     title = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > b ::text').get()
     band = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div.lyricsh > h2 > b ::text').get()[:-len(' lyrics')]
     written_by = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div:nth-child(17) > small ::text').get()
+    album = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div.panel.songlist-panel.noprint > div.songinalbum_title > b').get()
 
     if written_by:
         written_by = [author.strip() for author in written_by[len('Writer(s): '):].split(',') if author]
@@ -40,12 +39,12 @@ def parse_song(html: Selector):
         'title': title,
         'band': band,
         'written_by': written_by,
-        'album': None
+        'album': album
     }
 
 def parse_songs(html: Selector):
 
-    songs = [BASE_URL + link[3:] for link in html.css('#listAlbum a ::attr(href)').getall()]
+    songs = [BASE_URL + link[3:] for link in html.css('#listAlbum a ::attr(href)').getall()] #revisar
 
     return songs
 
@@ -72,7 +71,7 @@ def _get_artist(url: str):
         print(song)
         yield get_song(song)
         sbar.update()
-        time.sleep(3) # este parche es para engañar al sitio
+        time.sleep(5) # este parche es para engañar al sitio
 
     sbar.close()
 
@@ -102,7 +101,10 @@ def get_all():
 
 
     for page in letter_pages:
+
+
         for song in _get_page(page):
+            song['album'] = song['album'][3:-4] 
             json.dump(song, open(os.path.join(FOLDER, f"({song['title']})-({song['band']}).json"), 'w'), indent=2)
             print(f"({song['title']})-({song['band']})")
         pbar.update()
