@@ -31,6 +31,7 @@ def parse_song(html: Selector):
     title = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > b ::text').get()
     band = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div.lyricsh > h2 > b ::text').get()[:-len(' lyrics')]
     written_by = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div:nth-child(17) > small ::text').get()
+    album = html.css('body > div.container.main-page > div > div.col-xs-12.col-lg-8.text-center > div.panel.songlist-panel.noprint > div.songinalbum_title > b ::text')
 
     if written_by:
         written_by = [author.strip() for author in written_by[len('Writer(s): '):].split(',') if author]
@@ -40,7 +41,7 @@ def parse_song(html: Selector):
         'title': title,
         'band': band,
         'written_by': written_by,
-        'album': None
+        'album': album
     }
 
 def parse_songs(html: Selector):
