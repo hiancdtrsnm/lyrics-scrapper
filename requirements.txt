@@ -5,7 +5,7 @@ click==7.1.1
 cssselect==1.1.0
 enlighten==1.4.0
 idna==2.9
-lxml==4.5.0
+lxml==4.6.3
 parsel==1.5.2
 requests==2.23.0
 six==1.14.0
